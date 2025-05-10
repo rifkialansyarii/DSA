@@ -3,11 +3,15 @@
 using namespace std;
 
 void dMenu();
+void InputData(int data[], int& tagging);
+void OutputData(int data[], int tagging);
 void mPertama(string pesan);
-void InputData();
 void sepatahKata();
 
 int main() {
+  int data[12];
+  int tag = 0;
+
   char pl;
   do
   {
@@ -18,14 +22,16 @@ int main() {
     {
         case '1':
           system("cls");
-          InputData();
+          InputData(data, tag);
           //mPertama("pertama");
           getch();
           break;
 
         case '2':
-          mPertama("ke- dua");
-          /* code */ 
+          //mPertama("ke- dua");
+          system("cls");
+          OutputData(data, tag);
+          getch(); 
           break;
 
         case '3':
@@ -74,14 +80,25 @@ void mPertama(string pesan){
   getch();
 }
 
-void InputData(){
-  int data[7];
-
-  for (int i = 0; i < 8; i++){
-    cout << "Masukkan data:";
+void InputData(int data[], int& tagging){
+  for (int i = 0; i < 12; i++){
+    cout << "Masukkan data (Maks 12):";
     cin >> data[i]; 
+    tagging += 1;
   }
   
+}
+
+void OutputData(int data[], int tagging){
+  if(tagging == 0){
+    system("cls");
+    cout << "Data belum ditambahkan, mohon masukkan data pada menu 1!";
+  }else{
+    cout << "Data Anda: ";
+    for(int i = 0; i < 12; i++){
+      cout << data[i] << " ";
+    }
+  }
 }
 
 //Sepatah kata untuk pilihan ke-4
