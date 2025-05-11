@@ -5,8 +5,9 @@ using namespace std;
 void dMenu();
 void InputData(int data[], int& tagging);
 void OutputData(int data[], int tagging);
-void mPertama(string pesan);
+void SelectionSort(int data[]);
 void sepatahKata();
+int len;
 
 int main() {
   int data[12];
@@ -35,8 +36,10 @@ int main() {
           break;
 
         case '3':
-          mPertama("ke- tiga");
-          /* code */
+          //mPertama("ke- tiga");
+          system("cls");
+          SelectionSort(data);
+          getch();
           break;
 
         case '4':
@@ -73,16 +76,13 @@ void dMenu(){
 
 }
 
-//Menu pertama
-void mPertama(string pesan){
-  system("cls");
-  cout<<"hallo saya menu "<<pesan;
-  getch();
-}
 
 void InputData(int data[], int& tagging){
-  for (int i = 0; i < 12; i++){
-    cout << "Masukkan data (Maks 12):";
+  cout << "Masukkan Maksimum Jumlah Data:";
+  cin >> len;
+  
+  for (int i = 0; i < len; i++){
+    cout << "Masukkan data (Maks " << len << "): ";
     cin >> data[i]; 
     tagging += 1;
   }
@@ -95,11 +95,63 @@ void OutputData(int data[], int tagging){
     cout << "Data belum ditambahkan, mohon masukkan data pada menu 1!";
   }else{
     cout << "Data Anda: ";
-    for(int i = 0; i < 12; i++){
+    for(int i = 0; i < len; i++){
       cout << data[i] << " ";
     }
   }
 }
+
+//Ascending Selection Sort
+void asc_selection_sort(int data[]){
+    for (int i = 0; i < len-1; i++){
+        int pos = i;   
+        for (int j = i+1; j < len; j++){
+            if (data[pos] > data[j]) pos = j;
+        }
+        if (pos != i) swap(data[i], data[pos]);
+    }
+}
+
+//Descending Selection Sort
+void desc_selection_sort(int data[]){
+    for (int i = 0; i < len-1; i++){
+        int pos = i;
+        for (int j = i+1; j < len; j++){
+            if (data[pos] < data[j]) pos = j;
+        }
+        if (pos != i) swap(data[i], data[pos]);
+    }
+}
+
+//SelectionSort
+void SelectionSort(int data[]){
+    int select;
+    
+    cout << "Pilih tipe sorting:" << endl << "1. Ascending" << endl << "2. Descending" << endl;
+    cin >> select;
+
+    switch (select)
+    {
+    case 1:
+        system("cls");
+        asc_selection_sort(data);
+        cout << "Data berhasil diurutkan (Ascending). Silahkan cek pada menu 2" << endl;
+        break;
+
+    case 2:
+        system("cls");
+        desc_selection_sort(data);
+        cout << "Data berhasil diurutkan (Descending). Silahkan cek pada menu 2" << endl;
+        break;
+
+    default:
+        system("cls");
+        cout << "Pilihan tidak tersedia." << endl;
+        break;
+    }
+}
+
+
 
 //Sepatah kata untuk pilihan ke-4
 void sepatahKata(){
@@ -108,4 +160,9 @@ void sepatahKata(){
     getch();
 }
 
-
+//Menu pertama
+void mPertama(string pesan){
+  system("cls");
+  cout<<"hallo saya menu "<<pesan;
+  getch();
+}
