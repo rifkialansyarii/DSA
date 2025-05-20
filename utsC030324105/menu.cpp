@@ -5,7 +5,7 @@ using namespace std;
 void dMenu();
 void InputData(int data[], int& tagging);
 void OutputData(int data[], int tagging);
-void SelectionSort(int data[]);
+void SelectionSort(int data[], int tagging);
 void sepatahKata();
 void mPertama(string pesan);
 int len;
@@ -34,7 +34,7 @@ int main() {
 
             case '3':
                 system("cls");
-                SelectionSort(data);
+                SelectionSort(data, tag);
                 getch();
                 break;
 
@@ -122,30 +122,35 @@ void desc_selection_sort(int data[]) {
 }
 
 // SelectionSort - Pilihan ke-3
-void SelectionSort(int data[]) {
+void SelectionSort(int data[], int tagging) {
     mPertama("ke-3");
-    int select;
 
-    cout << "Pilih tipe sorting:" << endl
-         << "1. Ascending" << endl
-         << "2. Descending" << endl
-         << "Masukkan Angka: ";
-    cin >> select;
+    if (tagging == 0) { 
+        cout << "Data belum ditambahkan, mohon masukkan data pada menu 1!";
+    }else {
+        int select;
 
-    switch (select) {
-        case 1:
-            asc_selection_sort(data);
-            cout << "Data berhasil diurutkan (Ascending). Silahkan cek pada menu 2" << endl;
-            break;
+        cout << "Pilih tipe sorting:" << endl
+            << "1. Ascending" << endl
+            << "2. Descending" << endl
+            << "Masukkan Angka: ";
+        cin >> select;
 
-        case 2:
-            desc_selection_sort(data);
-            cout << "Data berhasil diurutkan (Descending). Silahkan cek pada menu 2" << endl;
-            break;
+        switch (select) {
+            case 1:
+                asc_selection_sort(data);
+                cout << "Data berhasil diurutkan (Ascending). Silahkan cek pada menu 2" << endl;
+                break;
 
-        default:
-            cout << "Pilihan tidak tersedia." << endl;
-            break;
+            case 2:
+                desc_selection_sort(data);
+                cout << "Data berhasil diurutkan (Descending). Silahkan cek pada menu 2" << endl;
+                break;
+
+            default:
+                cout << "Pilihan tidak tersedia." << endl;
+                break;
+        }
     }
 }
 
