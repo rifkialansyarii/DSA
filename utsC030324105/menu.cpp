@@ -75,7 +75,7 @@ void dMenu() {
 void InputData(int data[], int& tagging) {
     mPertama("ke-1");
 
-    cout << "Masukkan Maksimum Data: ";
+    cout << "Masukkan Maksimum Data (maks 100): ";
     cin >> len;
 
     for (int i = 0; i < len; i++) {
