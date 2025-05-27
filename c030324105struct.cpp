@@ -10,17 +10,23 @@ struct mahasiswa{
 
 int main(){
     mahasiswa rifki;
+    mahasiswa* ptr = &rifki;
 
-    rifki.nim = "C030324105";
-    rifki.nama = "Rifki Al Ansyari";
-    rifki.alamat = "Jl. Alalak Utara";
-    rifki.ipk = 3.7;
+    (*ptr).nim = "C030324105";
+    (*ptr).nama = "Rifki Al Ansyari";
+    (*ptr).alamat = "Jl. Alalak Utara";
+    (*ptr).ipk = 3.7;
 
     cout << endl << "Data Mahasiswa" << endl << "----------------------" << endl;
-    cout << "NIM: " << rifki.nim << endl;
-    cout << "Nama: " << rifki.nama << endl;
-    cout << "Alamat: " <<rifki.alamat << endl;
-    cout << "IPK: " << rifki.ipk << endl;
+    cout << "NIM: " << (*ptr).nim << endl;
+    cout << "Nama: " << (*ptr).nama << endl;
+    cout << "Alamat: " <<(*ptr).alamat << endl;
+    cout << "IPK: " << (*ptr).ipk << endl;
+
+
+
 
     return 0;
+
+
 }
