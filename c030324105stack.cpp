@@ -1,10 +1,12 @@
 #include <iostream>
+#define MAXSTACK 10
 using namespace std;
 
 typedef int ItemType;
 
+
 typedef struct{
-    ItemType Item[10];
+    ItemType Item[MAXSTACK];
     int Count;
 
 }Stack;
@@ -21,6 +23,9 @@ int main(){
 
 
     InitializeStack(S);
+    Push(13, S);
+    Push(70, S);
+
     
 
 
@@ -32,7 +37,7 @@ void InitializeStack(Stack* S){
 }
 
 int Full(Stack* S){
-    return (S->Count == 10);
+    return (S->Count == MAXSTACK);
 }
 
 int Empty(Stack *S){
