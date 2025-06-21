@@ -10,11 +10,16 @@ struct Node{
 };
 
 void addItem(Node *&head, int id, const std::string &itemName, const std::string &category, int stock);
+void deleteItem(Node *&head, int id);
 
 int main(){
     Node *inventory = nullptr;
 
-    addItem(inventory, 1, "Mikrotik", "Router", 10);
+    addItem(inventory, 1, "Mikrotik", "Router", 1);
+    addItem(inventory, 2, "Switch", "Router", 5);
+    addItem(inventory, 3, "Ruijie", "Access Point", 30);
+    addItem(inventory, 4, "UTP Cable", "Cable", 2);
+    deleteItem(inventory, 3);
 
     Node *current = inventory;
     while(current != nullptr){
@@ -43,4 +48,27 @@ void addItem(Node *&head, int id, const std::string &itemName, const std::string
     }
 
 };
+
+void deleteItem(Node *&head, int id){
+    if (head == nullptr){
+        std::cout << "Inventory is empty";
+    }else if (head->id == id){
+        Node *hapus = head;
+        head = head->next;
+        delete hapus;
+        std::cout << "Item deleted successfully!" << std::endl;
+    }else{
+        Node *current = head;
+        while(current->next != nullptr && current->next->id != id){
+            current = current->next;
+        }
+
+        Node *hapus = current->next;
+        current->next = hapus->next;
+        delete hapus;
+        std::cout << "Item deleted successfully!" << std::endl;
+    }
+}
+
+
 
