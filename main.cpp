@@ -11,6 +11,7 @@ struct Node{
 
 void addItem(Node *&head, int id, const std::string &itemName, const std::string &category, int stock);
 void deleteItem(Node *&head, int id);
+void insertItem(Node *prevNode, int id, const std::string &itemName, const std::string &category, int stock);
 
 int main(){
     Node *inventory = nullptr;
@@ -18,8 +19,10 @@ int main(){
     addItem(inventory, 1, "Mikrotik", "Router", 1);
     addItem(inventory, 2, "Switch", "Router", 5);
     addItem(inventory, 3, "Ruijie", "Access Point", 30);
-    addItem(inventory, 4, "UTP Cable", "Cable", 2);
+    addItem(inventory, 5, "UTP Cable", "Cable", 2);
     deleteItem(inventory, 3);
+    insertItem(inventory->next, 3, "Fiber Optik", "Cable", 5);
+    insertItem(inventory->next->next, 4, "Splicer", "Splicing equipment", 2);
 
     Node *current = inventory;
     while(current != nullptr){
@@ -70,5 +73,14 @@ void deleteItem(Node *&head, int id){
     }
 }
 
+void insertItem(Node *prevNode, int id, const std::string &itemName, const std::string &category, int stock){
+    if(prevNode == nullptr){
+        std::cout << "Previous Node cannot be NULL";
+        return;
+    }else{
+        Node *newNode = new Node{id, itemName, category, stock, prevNode->next};
+        prevNode->next = newNode;
+    };
 
+};
 
