@@ -34,15 +34,13 @@ void addItem(Node *&head, int id, const std::string &itemName, const std::string
 
     if (head == nullptr){
         head = newNode;
-    }
-
-    Node *current = head;
-    while(current->next != nullptr){
+    }else {
+        Node *current = head;
+        while(current->next != nullptr){
         current = current->next;
+        }
+        current->next = newNode;
     }
-
-    current->next = newNode;
-
 
 };
 
