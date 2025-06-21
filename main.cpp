@@ -21,7 +21,7 @@ int main(){
     addItem(inventory, 2, "Switch", "Router", 5);
     addItem(inventory, 3, "Ruijie", "Access Point", 30);
     addItem(inventory, 4, "UTP Cable", "Cable", 2);
-    updateItem(inventory, 4, "Fiber Optik");
+    updateItem(inventory, 3, "TP-Link");
 
     Node *current = inventory;
     while(current != nullptr){
