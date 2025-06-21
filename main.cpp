@@ -12,6 +12,7 @@ struct Node{
 void addItem(Node *&head, int id, const std::string &itemName, const std::string &category, int stock);
 void deleteItem(Node *&head, int id);
 void insertItem(Node *prevNode, int id, const std::string &itemName, const std::string &category, int stock);
+void updateItem(Node *head, int id, const std::string &itemName = "", const std::string &category = "", int stock = -1);
 
 int main(){
     Node *inventory = nullptr;
@@ -19,10 +20,8 @@ int main(){
     addItem(inventory, 1, "Mikrotik", "Router", 1);
     addItem(inventory, 2, "Switch", "Router", 5);
     addItem(inventory, 3, "Ruijie", "Access Point", 30);
-    addItem(inventory, 5, "UTP Cable", "Cable", 2);
-    deleteItem(inventory, 3);
-    insertItem(inventory->next, 3, "Fiber Optik", "Cable", 5);
-    insertItem(inventory->next->next, 4, "Splicer", "Splicing equipment", 2);
+    addItem(inventory, 4, "UTP Cable", "Cable", 2);
+    updateItem(inventory, 4, "Fiber Optik");
 
     Node *current = inventory;
     while(current != nullptr){
@@ -54,7 +53,7 @@ void addItem(Node *&head, int id, const std::string &itemName, const std::string
 
 void deleteItem(Node *&head, int id){
     if (head == nullptr){
-        std::cout << "Inventory is empty";
+        std::cout << "Inventory is empty" << std::endl;
     }else if (head->id == id){
         Node *hapus = head;
         head = head->next;
@@ -66,12 +65,16 @@ void deleteItem(Node *&head, int id){
             current = current->next;
         }
 
-        Node *hapus = current->next;
-        current->next = hapus->next;
-        delete hapus;
-        std::cout << "Item deleted successfully!" << std::endl;
+        if (current->next == nullptr){
+            std::cout << "Item not found" << std::endl;
+        }else{
+            Node *hapus = current->next;
+            current->next = hapus->next;
+            delete hapus;
+            std::cout << "Item deleted successfully!" << std::endl;
+        }
     }
-}
+};
 
 void insertItem(Node *prevNode, int id, const std::string &itemName, const std::string &category, int stock){
     if(prevNode == nullptr){
@@ -83,4 +86,22 @@ void insertItem(Node *prevNode, int id, const std::string &itemName, const std::
     };
 
 };
+
+void updateItem(Node *head, int id, const std::string &itemName, const std::string &category, int stock){
+    Node *current = head;
+    while(current != nullptr){
+        if(current->id == id){
+            if(itemName != "") current->itemName = itemName;
+            if(category != "") current->category = category;
+            if(stock != -1) current->stock = stock;
+            
+            std::cout << "Item updated successfully!" << std::endl;
+            return;
+        }
+
+        current = current->next;
+    }
+
+    std::cout << "Item with id " << id << " is not found!" << std::endl;
+}
 
