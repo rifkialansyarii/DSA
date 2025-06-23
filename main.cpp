@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string> // Tambahkan ini untuk std::string dan std::getline
+#include <string>
 
 int currentId = 1; // ID otomatis
 
@@ -9,14 +9,14 @@ struct Node
     std::string itemName;
     std::string category;
     int stock;
-
     struct Node *next;
 };
 
-void dMenu(); // Tambahkan deklarasi fungsi dMenu di sini
+void dMenu();
 void addItem(Node *&head, const std::string &itemName, const std::string &category, int stock);
 void deleteItem(Node *&head, int id);
 void insertItem(Node *prevNode, const std::string &itemName, const std::string &category, int stock);
+void insertItemSorted(Node *&head, int id, const std::string &itemName, const std::string &category, int stock);
 void updateItem(Node *head, int id, const std::string &itemName = "", const std::string &category = "", int stock = -1);
 void displayItems(Node *head);
 
@@ -30,7 +30,7 @@ int main()
         dMenu();
         std::cout << "Pilih menu: ";
         std::cin >> pilihan;
-        std::cin.ignore(); // Membersihkan newline dari buffer
+        std::cin.ignore();
 
         switch (pilihan)
         {
@@ -39,16 +39,15 @@ int main()
             int stock;
             std::string name, category;
             std::cout << "Masukkan Nama Barang: ";
-            std::getline(std::cin, name); // Gunakan std::getline
+            std::getline(std::cin, name);
             std::cout << "Masukkan Kategori: ";
-            std::getline(std::cin, category); // Gunakan std::getline
+            std::getline(std::cin, category);
             std::cout << "Masukkan Jumlah Stok: ";
             std::cin >> stock;
 
             addItem(inventory, name, category, stock);
             break;
         }
-
         case 2:
         {
             int id;
@@ -57,7 +56,6 @@ int main()
             deleteItem(inventory, id);
             break;
         }
-
         case 3:
         {
             int id, stock;
@@ -66,24 +64,38 @@ int main()
             std::cin >> id;
             std::cin.ignore();
             std::cout << "Nama baru (biarkan kosong jika tidak diubah): ";
-            std::getline(std::cin, name); // Gunakan std::getline
+            std::getline(std::cin, name);
             std::cout << "Kategori baru (biarkan kosong jika tidak diubah): ";
-            std::getline(std::cin, category); // Gunakan std::getline
+            std::getline(std::cin, category);
             std::cout << "Stok baru (-1 jika tidak diubah): ";
             std::cin >> stock;
 
             updateItem(inventory, id, name, category, stock);
             break;
         }
-
         case 4:
+        {
+            int id, stock;
+            std::string name, category;
+            std::cout << "Masukkan ID baru: ";
+            std::cin >> id;
+            std::cin.ignore();
+            std::cout << "Masukkan Nama Barang: ";
+            std::getline(std::cin, name);
+            std::cout << "Masukkan Kategori: ";
+            std::getline(std::cin, category);
+            std::cout << "Masukkan Jumlah Stok: ";
+            std::cin >> stock;
+
+            insertItemSorted(inventory, id, name, category, stock);
+            break;
+        }
+        case 5:
             displayItems(inventory);
             break;
-
-        case 5:
+        case 6:
             std::cout << "\nTerima kasih! Program selesai.\n";
             break;
-
         default:
             std::cout << "Pilihan tidak valid!\n";
             break;
@@ -92,7 +104,7 @@ int main()
         std::cout << "\nTekan Enter untuk melanjutkan...";
         std::cin.ignore();
         std::cin.get();
-    } while (pilihan != 5);
+    } while (pilihan != 6);
 
     return 0;
 }
@@ -104,8 +116,9 @@ void dMenu()
     std::cout << "1. Tambah Item" << std::endl;
     std::cout << "2. Hapus Item" << std::endl;
     std::cout << "3. Update Item" << std::endl;
-    std::cout << "4. Tampilkan Semua Item" << std::endl;
-    std::cout << "5. Keluar" << std::endl;
+    std::cout << "4. Insert Item" << std::endl;
+    std::cout << "5. Tampilkan Semua Item" << std::endl;
+    std::cout << "6. Keluar" << std::endl;
 }
 
 void addItem(Node *&head, const std::string &itemName, const std::string &category, int stock)
@@ -125,7 +138,7 @@ void addItem(Node *&head, const std::string &itemName, const std::string &catego
         }
         current->next = newNode;
     }
-};
+}
 
 void deleteItem(Node *&head, int id)
 {
@@ -160,7 +173,7 @@ void deleteItem(Node *&head, int id)
             std::cout << "Item deleted successfully!" << std::endl;
         }
     }
-};
+}
 
 void insertItem(Node *prevNode, const std::string &itemName, const std::string &category, int stock)
 {
@@ -173,8 +186,38 @@ void insertItem(Node *prevNode, const std::string &itemName, const std::string &
     {
         Node *newNode = new Node{currentId++, itemName, category, stock, prevNode->next};
         prevNode->next = newNode;
-    };
-};
+    }
+}
+
+void insertItemSorted(Node *&head, int id, const std::string &itemName, const std::string &category, int stock)
+{
+    // Cek duplikasi ID
+    Node *cek = head;
+    while (cek != nullptr) {
+        if (cek->id == id) {
+            std::cout << "ID sudah ada, silakan gunakan ID lain.\n";
+            return;
+        }
+        cek = cek->next;
+    }
+
+    Node *newNode = new Node{id, itemName, category, stock, nullptr};
+
+    if (head == nullptr || id < head->id) {
+        newNode->next = head;
+        head = newNode;
+        std::cout << "Item berhasil disisipkan!\n";
+        return;
+    }
+
+    Node *current = head;
+    while (current->next != nullptr && current->next->id < id) {
+        current = current->next;
+    }
+    newNode->next = current->next;
+    current->next = newNode;
+    std::cout << "Item berhasil disisipkan!\n";
+}
 
 void updateItem(Node *head, int id, const std::string &itemName, const std::string &category, int stock)
 {
