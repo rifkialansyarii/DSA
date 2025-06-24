@@ -2,6 +2,8 @@
 #include <conio.h>
 using namespace std;
 
+// test dari farish
+
 void dMenu();
 void InputData(int data[], int& tagging);
 void OutputData(int data[], int tagging);
